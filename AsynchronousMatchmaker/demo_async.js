@@ -123,13 +123,6 @@ handlers.GetBattleData = function(args)
 			var listOfFullGames = server.GetSharedGroupData(json);
 
 			var gameFound = {};
-				
-			// if (listOfOpenGames.Data.hasOwnProperty(args.GUID)) 
-			// {
-			// 	var parsed = JSON.parse(listOfOpenGames.Data[args.GUID].Value);
-			// 	return gameFound[args.GUID] = {"gameState" : parsed.gameState, "startTime" : parsed.startTime, "lastMoveTime" : parsed.lastMoveTime, "playerA" : parsed.playerA, "playerA_HP" : parsed.playerA_HP,	"playerA_moves" : parsed.playerA_moves, "playerB" : null , "playerB_HP" : parsed.playerB_HP,	"playerB_moves" : parsed.playerB_moves, "winner" : parsed.winner };
-			// }
-			//else 
 
 			if(listOfFullGames.Data.hasOwnProperty(args.GUID))
 			{
@@ -214,22 +207,6 @@ handlers.ProcessMove = function(args)
 		throw "Invalid args.GUID parameter.";
 	}
 };
-
-
-
-
-//For testing random stuff...
-handlers.TestReturnValue = function(args)
-{
-   	//var id = "65eb2674-cfad-441f-9a9f-0551eb7cfc75";
-    //var details = {"playerA":{"PlayFabId":"C4B1CEE856CF3F54","Created":"2014-08-19T00:40:18.421Z","Username":"sdktestuser1","TitleInfo":{"DisplayName":"sdktestuser1","Created":"2015-02-02T04:50:42.66Z","LastLogin":"2015-02-16T00:25:45.93Z","FirstLogin":"2015-02-02T04:50:42.66Z"}},"playerA_HP":25,"playerA_moves":[23,23,22,19,15,20,14,17,14,19,12,20],"playerB":{"PlayFabId":"FC5704B9075819E6","Created":"2014-10-27T03:03:53.151Z","Username":"zac01","TitleInfo":{"DisplayName":"zac01","Created":"2015-02-02T04:46:14.158Z","LastLogin":"2015-02-16T06:14:27.521Z","FirstLogin":"2015-02-02T04:46:14.158Z"}},"playerB_HP":-15,"playerB_moves":[19,22,22,14,17,24,13,13,18,16,16,18],"gameState":"Archived","startTime":1424067242428,"endTime":1424067405274,"lastMoveTime":1424067405274,"winner":"Player A"};
-	
-	//var updated = ProcessGame(id, details);	
-    //log.info(args.GUID);
-};
-
-
-
 
 // helper functions:
 // ==============================================================================================
@@ -393,37 +370,6 @@ function ProcessGame(GUID, gameDetails)
 			throw "No historic data found for page: "  + pageToFetch ;
 		}
 	}
-
-
-
-	// gamesHistory = {"games" : []};
-	// gameRecord = {};
-	// 	gameRecord["guid"] = "";
-	// 	gameRecord["details"] = {};
-
-	// playerData = server.GetUserData({"PlayFabId" : gameDetails.playerB.PlayFabId, "Keys" : ["PreviousGames", "ActiveGames"]});
-
-	// if(!isObjectEmpty(playerData.Data))
-	// {
-	// 	if(!isObjectEmpty(playerData.Data["PreviousGames"]))
-	// 	{
-	// 		gamesHistory = JSON.parse(playerData.Data["PreviousGames"].Value);
-	// 		gameRecord["guid"] = GUID;
-	// 		gameRecord["details"] = gameDetails;
-	// 		gamesHistory.games.push(gameRecord);
-	// 		server.UpdateUserData({"PlayFabId" : gameDetails.playerB.PlayFabId, "Data" : { "PreviousGames" : JSON.stringify(gamesHistory) }, "Permission":"Public" });
-	// 	}
-	// 	else
-	// 	{
-
-	// 	}
-
-	// 	if(!isObjectEmpty(playerData.Data["ActiveGames"]))
-	// 	{
-	// 		activeGames = JSON.parse(playerData.Data["ActiveGames"].Value);
-	// 		log.info(activeGames);
-	// 	}
-	// }
 	return gameDetails;
 };
 
