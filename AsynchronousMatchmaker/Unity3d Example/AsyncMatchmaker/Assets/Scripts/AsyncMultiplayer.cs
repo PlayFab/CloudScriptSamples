@@ -44,10 +44,11 @@ public class AsyncMultiplayer : MonoBehaviour {
 	private string selectedGameId = string.Empty;
 	
 	// used to contril the ping rate when fetching updates
-	private float serverPollRate = 120f; 
-	private float maxPollRate = 600f;
-	private float minPollRate = 5f;
+	private float serverPollRate = 60f; 
+	private float maxPollRate = 180f;
+	private float minPollRate = 60f;
 	private float lastPollTime = 0;
+	private float pollCooldown = 10f;
 	
 	// scroll pos vectors
 	private Vector2 gamesListScrollPos = Vector2.zero;
@@ -257,15 +258,19 @@ public class AsyncMultiplayer : MonoBehaviour {
 			GUI.DrawTexture(new Rect(battleP1Area.x, battleP1Area.y, battleP1Area.width, battleP1Area.width), GetImageForShip(this.currentBattleData.playerA_HP));
 			
 			Rect battleCenterArea = new Rect(battlePaneArea.width*.31f, battlePaneArea.height*.10f, battlePaneArea.width*.40f, battlePaneArea.height*.70f); 
-			GUI.Box(battleCenterArea, "Battle Arena -- ( Refresh after: " + this.serverPollRate +" sec)");
+			GUI.Box(battleCenterArea, "Battle Arena -- (Auto-refresh after: " + this.serverPollRate +" sec)");
 			GUILayout.BeginArea(battleCenterArea);
 				GUILayout.Label("");
 				GUILayout.BeginHorizontal();
 					this.serverPollRate = Mathf.FloorToInt(GUILayout.HorizontalSlider(this.serverPollRate, this.minPollRate, this.maxPollRate));
+					
+					GUI.enabled = this.lastPollTime + this.pollCooldown > Time.time ? false : true;
 					if(GUILayout.Button("Refresh", GUILayout.MaxWidth(battleCenterArea.width*.25f)))
 					{
 						this.lastPollTime = -600f;
 					}
+					GUI.enabled = true;
+					
 				GUILayout.EndHorizontal();
 				GUILayout.Space(10);
 				
@@ -445,9 +450,19 @@ public class AsyncMultiplayer : MonoBehaviour {
 		
 		GUILayout.BeginArea(viewMenuArea);
 	
-			GUILayout.Label("View Games -- ( Refresh after: " + this.serverPollRate +" sec)");
+				GUILayout.Label("View Games -- (Auto-refresh after: " + this.serverPollRate +" sec)");
 		
+				GUILayout.BeginHorizontal();
 				this.serverPollRate = Mathf.FloorToInt(GUILayout.HorizontalSlider(this.serverPollRate, this.minPollRate, this.maxPollRate));
+				
+				GUI.enabled = this.lastPollTime + this.pollCooldown > Time.time ? false : true;
+				if(GUILayout.Button("Refresh", GUILayout.MaxWidth(viewMenuArea.width*.25f)))
+				{
+					this.lastPollTime = -600f;
+				}
+				GUI.enabled = true;
+				
+				GUILayout.EndHorizontal();
 				
 				GUILayout.BeginHorizontal();
 			
