@@ -182,8 +182,15 @@ handlers.RoomLeft = function (args) {
 }
 
 // Triggered automatically when a Photon room closes
+// Note: currentPlayerId is undefined in this function
 handlers.RoomClosed = function (args) {
     log.debug("Room Closed - Game: " + args.GameId);
+}
+
+// Triggered automatically when a Photon room game property is updated.
+// Note: currentPlayerId is undefined in this function
+handlers.RoomPropertyUpdated = function(args) {
+    log.debug("Room Property Updated - Game: " + args.GameId);
 }
 
 // Triggered by calling "OpRaiseEvent" on the Photon client. The "args.Data" property is 
