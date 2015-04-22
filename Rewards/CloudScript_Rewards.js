@@ -80,7 +80,7 @@ function currTimeSeconds()
 	return now.getTime() / 1000;
 }
 
-handlers.monsterKilled = function(args)
+handlers.onMonsterKilled = function(args)
 {
 	var monsterType = args.type;
 	
