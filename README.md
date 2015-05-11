@@ -9,6 +9,10 @@ This repository contains several examples on how to use Cloud Script in PlayFab.
 ----
 To get the most from these samples you should be very familiar with PlayFab's Cloud Script service. Check out our Cloud Script [getting started guide](https://playfab.com/cloud-script-guide).
 
+To connect to the PlayFab service, your machine must be running TLS v1.1 or better.
+* For Windows, this means Windows 7 and above
+* [Official Microsoft Documentation](https://msdn.microsoft.com/en-us/library/windows/desktop/aa380516%28v=vs.85%29.aspx)
+* [Support for SSL/TLS protocols on Windows](http://blogs.msdn.com/b/kaushal/archive/2011/10/02/support-for-ssl-tls-protocols-on-windows.aspx)
 
 3. Source Code & Key Repository Components:
 ----
