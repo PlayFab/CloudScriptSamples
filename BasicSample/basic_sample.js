@@ -31,9 +31,8 @@ handlers.helloWorld = function (args) {
     // Cloud Script handles authenticating the player automatically.
     var message = "Hello " + currentPlayerId + "!";
 
-    // You can use the "log" object to write out debugging statements.  You can view 
-    // these statements in the Logs tab in the Servers section of the Game Manager website. 
-    // The "log" object has three functions corresponding to logging level: debug, info, and error.
+    // You can use the "log" object to write out debugging statements. The "log" object has
+    // three functions corresponding to logging level: debug, info, and error.
     log.info(message);
 
     // Whatever value you return from a CloudScript handler function is passed back 
