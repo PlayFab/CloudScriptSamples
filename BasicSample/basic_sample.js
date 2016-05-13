@@ -18,7 +18,7 @@
 // function return result in the response.
 // (https://api.playfab.com/Documentation/Client/method/ExecuteCloudScript)
 // 
-// 2) You created PlayStream event actionss that call them when a particular 
+// 2) You create PlayStream event actions that call them when a particular 
 // event occurs, passing in the event and associated player profile data.
 // (https://api.playfab.com/playstream/docs)
 // 
