@@ -62,27 +62,27 @@ handlers.makeAPICall = function (args, context) {
     // (https://api.playfab.com/Documentation/Server). It is automatically 
     // authenticated as your title and handles all communication with 
     // the PlayFab API, so you don't have to write extra code to issue HTTP requests. 
-	var playerStatResult = server.UpdateUserStatistics (
-		{
-			PlayFabId: currentPlayerId,
-			UserStatistics: {Level:2}
-		}
-	);
+    var playerStatResult = server.UpdateUserStatistics (
+        {
+            PlayFabId: currentPlayerId,
+            UserStatistics: {Level:2}
+        }
+    );
 }
 
 // This is a simple example of making a web request to an external HTTP API.
 handlers.makeHTTPRequest = function (args, context) {
     var headers = {
-    	"X-MyCustomHeader": "Some Value"
+        "X-MyCustomHeader": "Some Value"
     };
     
     var body = {
-    	input: args,
-    	userId: currentPlayerId,
-    	mode: "foobar"
+        input: args,
+        userId: currentPlayerId,
+        mode: "foobar"
     };
 
-     var url = "http://httpbin.org/status/200";
+    var url = "http://httpbin.org/status/200";
     var content = JSON.stringify(body);
     var httpMethod = "post";
     var contentType = "application/json";
@@ -225,13 +225,13 @@ handlers.unlockHighSkillContent = function(args, context)
     var playerStatUpdatedEvent = context.playStreamEvent;
     
     var playerInternalData = server.UpdateUserInternalData(
-	{
-		PlayFabId: currentPlayerId,
-		"Data": {
-		    "HighSkillContent": true,
-		    "XPAtHighSkillUnlock": playerStatUpdatedEvent.StatisticValue
-		  }
-	});
+    {
+        PlayFabId: currentPlayerId,
+        "Data": {
+            "HighSkillContent": true,
+            "XPAtHighSkillUnlock": playerStatUpdatedEvent.StatisticValue
+          }
+    });
 
     log.info('Unlocked HighSkillContent for ' + context.playerProfile.DisplayName);
     return { profile: context.playerProfile };
