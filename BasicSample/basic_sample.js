@@ -30,6 +30,7 @@
 
 
 // This is a Cloud Script handler function. args is the object passed-in to ExecuteCloudScript API.
+// (https://api.playfab.com/Documentation/Client/method/ExecuteCloudScript)
 // context contains additional information when the Cloud Script is called from a PlayStream action.
 handlers.helloWorld = function (args, context) {
     
@@ -217,7 +218,7 @@ handlers.unlockHighSkillContent = function(args, context)
 		PlayFabId: currentPlayerId,
 		"Data": {
 		    "HighSkillContent": true,
-		    "XPAtHighSkillUnlock": statUpdateEvent.StatisticValue
+		    "XPAtHighSkillUnlock": playerStatUpdatedEvent.StatisticValue
 		  }
 	});
 
