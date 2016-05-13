@@ -33,9 +33,11 @@
 // context contains additional information when the Cloud Script is called from a PlayStream action.
 handlers.helloWorld = function (args, context) {
     
-    // "currentPlayerId" is initialized to the PlayFab ID of the player logged-in on the game client. 
+    // The pre-defined "currentPlayerId" variable is initialized to the PlayFab ID of the player logged-in on the game client. 
     // Cloud Script handles authenticating the player automatically.
-    var message = "Hello " + currentPlayerId + "!";
+    // "args" is set to the value of the "FunctionParameter" field of the object passed in to 
+    // ExecuteCloudScript from the client.
+    var message = "Hello " + currentPlayerId + "! You said " + args.inputValue;
 
     // You can use the "log" object to write out debugging statements. The "log" object has
     // three functions corresponding to logging level: debug, info, and error. These functions
@@ -51,6 +53,59 @@ handlers.helloWorld = function (args, context) {
     return { messageValue: message };
 }
 
+// This is a simple example of making a PlayFab server API call
+handlers.makeAPICall = function (args, context) {
+    
+    // The pre-defined "server" object has functions for each PlayFab server API 
+    // (https://api.playfab.com/Documentation/Server). It is automatically 
+    // authenticated as your title and handles all communication with 
+    // the PlayFab API, so you don't have to write the code to make web requests. 
+	var playerStatResult = server.UpdateUserStatistics (
+		{
+			PlayFabId: currentPlayerId,
+			UserStatistics: {Level:2}
+		}
+	);
+}
+
+// This is a simple example of making a web request to an external HTTP API.
+handlers.makeHTTPRequest = function (args, context) {
+    var headers = {
+    	"X-MyCustomHeader": "Some Value"
+    };
+    
+    var body = {
+    	input: args,
+    	userId: currentPlayerId,
+    	mode: "foobar"
+    };
+
+     var url = "http://httpbin.org/status/200";
+    var content = JSON.stringify(body);
+    var httpMethod = "post";
+    var contentType = "application/json";
+    var logRequestAndResponse = true;
+    // The pre-defined http object makes synchronous HTTP requests
+    var response = http.request(languageFilterUrl, httpMethod, content, contentType, headers, logRequestAndResponse);
+    return { responseContent: response };
+}
+
+// This is a simple example of a function that is called as a 
+// PlayStream event action. (https://playfab.com/introducing-playstream/)
+handlers.handlePlayStreamEventAndProfile = function (args, context) {
+    
+    // The event that triggered the action 
+    // (https://api.playfab.com/playstream/docs/PlayStreamEventModels)
+    var psEvent = context.playStreamEvent;
+    
+    // The profile data of the player associated with the event
+    // (https://api.playfab.com/playstream/docs/PlayStreamProfileModels)
+    var profile = context.playerProfile;
+    return { eventName: psEvent.EventName, profileDispName: profile.DisplayName };
+}
+
+// Below are some examples of using Cloud Script in slightly more realistic scenarios
+
 // This is a function that the game client would call whenever a player completes
 // a level. It updates a setting in the player's data that only game server
 // code can write - it is read-only on the client - and it updates a player
@@ -60,18 +115,9 @@ handlers.helloWorld = function (args, context) {
 // level completion data to detect cheating. It could also do things like 
 // award the player items from the game catalog based on their performance.
 handlers.completedLevel = function (args, context) {
-
-    // "args" is set to the value of the "FunctionParameter" field of the object passed in to 
-    // ExecuteCloudScript from the client.  It contains whatever properties you want to pass 
-    // into your Cloud Script function. In this case it contains information about 
-    // the level a player has completed.
     var level = args.levelName;
     var monstersKilled = args.monstersKilled;
-
-    // The "server" object has functions for each PlayFab server API 
-    // (https://api.playfab.com/Documentation/Server). It is automatically 
-    // authenticated as your title and handles all communication with 
-    // the PlayFab API, so you don't have to write the code to make web requests. 
+    
     var updateUserDataResult = server.UpdateUserInternalData({
         PlayFabId: currentPlayerId,
         Data: {
@@ -159,6 +205,25 @@ function processPlayerMove(playerMove) {
     return true;
 }
 
+// Triggered when a player_statistic_changed PlayStream event causes a player 
+// to enter a segment defined for high skill players. It sets a key value in
+// the player's internal data which unlocks some new content for the player.
+handlers.unlockHighSkillContent = function(args, context)
+{
+    var playerStatUpdatedEvent = context.playStreamEvent;
+    
+    var playerInternalData = server.UpdateUserInternalData(
+	{
+		PlayFabId: currentPlayerId,
+		"Data": {
+		    "HighSkillContent": true,
+		    "XPAtHighSkillUnlock": statUpdateEvent.StatisticValue
+		  }
+	});
+
+    log.info('Unlocked HighSkillContent for ' + context.playerProfile.DisplayName);
+    return { profile: context.playerProfile };
+}
 
 // Photon Webhooks Integration
 //
