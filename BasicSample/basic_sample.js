@@ -202,7 +202,8 @@ function processPlayerMove(playerMove) {
     server.UpdateUserInternalData({
         PlayFabId: currentPlayerId,
         Data: {
-            last_move_timestamp: new Date(now).toUTCString()
+            last_move_timestamp: new Date(now).toUTCString(),
+            last_move: playerMove
         }
     });
 
