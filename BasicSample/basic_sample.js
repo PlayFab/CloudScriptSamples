@@ -26,22 +26,22 @@
 // 
 // The following handler function examples demonstrate all three options.
 //
-// - The PlayFab Team
-//
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // This is a Cloud Script handler function. args is the object passed-in to ExecuteCloudScript API.
 // context contains additional information when the Cloud Script is called from a PlayStream action.
 handlers.helloWorld = function (args, context) {
+    
     // "currentPlayerId" is initialized to the PlayFab ID of the player logged-in on the game client. 
     // Cloud Script handles authenticating the player automatically.
     var message = "Hello " + currentPlayerId + "!";
-    var data = { foo: "bar" };
+
     // You can use the "log" object to write out debugging statements. The "log" object has
     // three functions corresponding to logging level: debug, info, and error. These functions
     // take a message string and an optional object.
-    log.info(message, data);
+    log.info(message);
+    log.debug("helloWorld:", { foo: "bar" });
 
     // Whatever value you return from a Cloud Script handler function is passed back 
     // to the game client in the ExecuteCloudScript API response, along with the log statements
@@ -105,10 +105,12 @@ handlers.updatePlayerMove = function (args) {
 // If the move is valid, then it updates the player's statistics and profile data.
 // This function is called from the "UpdatePlayerMove" handler above and also is 
 // triggered by the "RoomEventRaised" Photon room event in the Webhook handler
-// below. For this example, the script defines the cooldown period (playerMoveCooldownInSeconds)
+// below. 
+//
+// For this example, the script defines the cooldown period (playerMoveCooldownInSeconds)
 // as 15 seconds. A recommended approach for values like this would be to create them in Title
-// Data, so that they can be queries in the script with a call to
-// https://api.playfab.com/Documentation/Server/method/GetTitleData. This would allow you to
+// Data, so that they can be queries in the script with a call to GetTitleData
+// (https://api.playfab.com/Documentation/Server/method/GetTitleData). This would allow you to
 // make adjustments to these values over time, without having to edit, test, and roll out an
 // updated script.
 function processPlayerMove(playerMove) {
@@ -161,12 +163,11 @@ function processPlayerMove(playerMove) {
 // Photon Webhooks Integration
 //
 // The following functions are examples of Photon Cloud Webhook handlers. 
-// When you enable the Photon Add-on in the Game Manager, your Photon applications 
-// are automatically configured to authenticate players using their PlayFab accounts 
-// and to fire events that trigger your Cloud Script Webhook handlers, if defined. 
+// When you enable the Photon Add-on (https://playfab.com/marketplace/photon/)
+// in the Game Manager, your Photon applications are automatically configured
+// to authenticate players using their PlayFab accounts and to fire events that 
+// trigger your Cloud Script Webhook handlers, if defined. 
 // This makes it easier than ever to incorporate multiplayer server logic into your game.
-//
-//  For more information, see https://playfab.com/marketplace/photon/
 
 
 // Triggered automatically when a Photon room is first created
