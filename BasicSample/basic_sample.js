@@ -125,7 +125,7 @@ handlers.completedLevel = function (args, context) {
     var updateUserDataResult = server.UpdateUserInternalData({
         PlayFabId: currentPlayerId,
         Data: {
-            lastLevelCompleted: level
+            "lastLevelCompleted": level
         }
     });
 
@@ -134,7 +134,7 @@ handlers.completedLevel = function (args, context) {
     server.UpdateUserStatistics({
         PlayFabId: currentPlayerId,
         UserStatistics: {
-            level_monster_kills: monstersKilled
+            "level_monster_kills": monstersKilled
         }
     });
 
