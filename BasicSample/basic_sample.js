@@ -102,7 +102,10 @@ handlers.handlePlayStreamEventAndProfile = function (args, context) {
     // The profile data of the player associated with the event
     // (https://api.playfab.com/playstream/docs/PlayStreamProfileModels)
     var profile = context.playerProfile;
-    return { eventName: psEvent.EventName, profileDispName: profile.DisplayName };
+    var content = JSON.stringify({user: profile.PlayerId, event: psEvent.EventName});
+    var response = http.request('https://httpbin.org/status/200', 'post', content, 'application/json', null, true);
+    
+    return { externalAPIResponse: response };
 }
 
 // Below are some examples of using Cloud Script in slightly more realistic scenarios
