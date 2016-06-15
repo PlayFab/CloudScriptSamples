@@ -62,10 +62,10 @@ handlers.makeAPICall = function (args, context) {
     // (https://api.playfab.com/Documentation/Server). It is automatically 
     // authenticated as your title and handles all communication with 
     // the PlayFab API, so you don't have to write extra code to issue HTTP requests. 
-    var playerStatResult = server.UpdateUserStatistics (
+    var playerStatResult = server.UpdatePlayerStatistics(
         {
             PlayFabId: currentPlayerId,
-            UserStatistics: {Level:2}
+            Statistics: [{ StatisticName: "Level", Value: 2 }]
         }
     );
 }
@@ -136,11 +136,11 @@ handlers.completedLevel = function (args, context) {
 
     log.debug("Set lastLevelCompleted for player " + currentPlayerId + " to " + level);
 
-    server.UpdateUserStatistics({
+    server.UpdatePlayerStatistics({
         PlayFabId: currentPlayerId,
-        UserStatistics: {
-            level_monster_kills: monstersKilled
-        }
+        Statistics: [
+            { StatisticName: "level_monster_kills", Value: monstersKilled }
+        ]
     });
 
     log.debug("Updated level_monster_kills stat for player " + currentPlayerId + " to " + monstersKilled);
@@ -190,18 +190,20 @@ function processPlayerMove(playerMove) {
         }
     }
 
-    var playerStats = server.GetUserStatistics({
+    var playerStats = server.GetPlayerStatistics({
         PlayFabId: currentPlayerId
-    }).UserStatistics;
+    }).Statistics;
 
-    if (playerStats.movesMade)
-        playerStats.movesMade += 1;
-    else
-        playerStats.movesMade = 1;
+    var moves = { StatisticName: "movesMade", Value: 1 };
+    for (i = 0; i < playerStats.length; ++i) {
+        if (playerStats[i].StatisticName === "movesMade") {
+            moves.Value = playerStats[i].Value + 1;
+        }
+    }
 
-    server.UpdateUserStatistics({
+    server.UpdatePlayerStatistics({
         PlayFabId: currentPlayerId,
-        UserStatistics: playerStats
+        Statistics: [moves]
     });
 
     server.UpdateUserInternalData({
