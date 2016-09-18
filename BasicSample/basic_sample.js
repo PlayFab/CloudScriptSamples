@@ -86,10 +86,9 @@ handlers.makeHTTPRequest = function (args, context) {
     var content = JSON.stringify(body);
     var httpMethod = "post";
     var contentType = "application/json";
-    var logRequestAndResponse = true;
-    
+
     // The pre-defined http object makes synchronous HTTP requests
-    var response = http.request(url, httpMethod, content, contentType, headers, logRequestAndResponse);
+    var response = http.request(url, httpMethod, content, contentType, headers);
     return { responseContent: response };
 }
 
