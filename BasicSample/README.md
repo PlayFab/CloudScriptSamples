@@ -1,7 +1,7 @@
 Cloud Script Basic Sample (basic_sample.js):
 ----
 
-Note to self: This is not the authoritative copy of this file.  Changing this file does not update existing or new titles.  The real location is stored in playfab server cloudlogic config.
+Please note that the Cloud Script automatically loaded as Revision 1 in all new titles is not specifically copied from this source. We do make an effort to keep them in sync, but if you do notice any differences, please feel free to let us know via the PlayFab forums.
 
 This file provides basic Cloud Script examples of:
 
