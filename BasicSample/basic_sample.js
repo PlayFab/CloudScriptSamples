@@ -47,7 +47,7 @@ handlers.helloWorld = function (args, context) {
     var inputValue = null;
     if (args && args.inputValue)
         inputValue = args.inputValue;
-    log.debug("helloWorld:", { input: args.inputValue });
+    log.debug("helloWorld:", { input: inputValue });
 
     // The value you return from a Cloud Script function is passed back 
     // to the game client in the ExecuteCloudScript API response, along with any log statements
