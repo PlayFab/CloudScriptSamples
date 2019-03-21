@@ -7,7 +7,7 @@ This repository contains several examples on how to use Cloud Script in PlayFab.
 
 2. Prerequisites:
 ----
-To get the most from these samples you should be very familiar with PlayFab's Cloud Script service. Check out our Cloud Script [getting started guide](https://playfab.com/cloud-script-guide).
+To get the most from these samples you should be very familiar with PlayFab's Cloud Script service. Check out our Cloud Script [getting started guide](https://docs.microsoft.com/en-us/gaming/playfab/features/automation/cloudscript/quickstart).
 
 To connect to the PlayFab service, your machine must be running TLS v1.1 or better.
 * For Windows, this means Windows 7 and above
