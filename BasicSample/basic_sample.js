@@ -248,37 +248,126 @@ handlers.unlockHighSkillContent = function (args, context) {
 
 // Triggered automatically when a Photon room is first created
 handlers.RoomCreated = function (args) {
-    log.debug("Room Created - Game: " + args.GameId + " MaxPlayers: " + args.CreateOptions.MaxPlayers);
+	server.WritePlayerEvent({
+		EventName : "room_created",
+		PlayFabId: args.UserId,
+            Body: {
+                WebHook: {
+                    AppVersion: args.AppVersion,
+                    Region: args.Region,
+                    GameId: args.GameId,
+                    Type: args.Type,
+                    ActorNr: args.ActorNr,
+                    CreateOptions: args.CreateOptions
+                }
+            }
+	});
 };
 
 // Triggered automatically when a player joins a Photon room
 handlers.RoomJoined = function (args) {
-    log.debug("Room Joined - Game: " + args.GameId + " PlayFabId: " + args.UserId);
+	server.WritePlayerEvent({
+		EventName: "room_joined",
+		PlayFabId: args.UserId,
+		Body: {
+			WebHook: {
+				AppVersion: args.AppVersion,
+				Region: args.Region,
+				GameId: args.GameId,
+				ActorNr: args.ActorNr
+			}
+		}
+	});
 };
 
 // Triggered automatically when a player leaves a Photon room
 handlers.RoomLeft = function (args) {
-    log.debug("Room Left - Game: " + args.GameId + " PlayFabId: " + args.UserId);
+	server.WritePlayerEvent({
+		EventName: "room_left",
+		PlayFabId: args.UserId,
+		Body: {
+			WebHook: {
+				AppVersion: args.AppVersion,
+				Region: args.Region,
+				GameId: args.GameId,
+				Type: args.Type,
+				ActorNr: args.ActorNr,
+				IsInactive: args.IsInactive
+			}
+		}
+	});
 };
 
 // Triggered automatically when a Photon room closes
 // Note: currentPlayerId is undefined in this function
 handlers.RoomClosed = function (args) {
-    log.debug("Room Closed - Game: " + args.GameId);
+    server.WriteTitleEvent({
+		EventName: "room_closed",
+		Body: {
+			WebHook: {
+				AppVersion: args.AppVersion,
+				Region: args.Region,
+				GameId: args.GameId,
+				Type: args.Type,
+				ActorCount: args.ActorCount
+			}
+		}
+	});
 };
 
 // Triggered automatically when a Photon room game property is updated.
 handlers.RoomPropertyUpdated = function (args) {
-    log.debug("Room Property Updated - Game: " + args.GameId);
+	if (args.Type === "Game") {
+		server.WritePlayerEvent({
+			EventName: "room_properties_updated",
+			PlayFabId: args.UserId,
+			Body: {
+				WebHook: {
+					AppVersion: args.AppVersion,
+					Region: args.Region,
+					GameId: args.GameId,
+					ActorNr: args.ActorNr,
+					Properties: args.Properties
+				}
+			}
+		});
+	} else { // "Actor"
+		server.WritePlayerEvent({
+			EventName: "player_roperties_updated",
+			PlayFabId: args.UserId,
+			Body: {
+				WebHook: {
+					AppVersion: args.AppVersion,
+					Region: args.Region,
+					GameId: args.GameId,
+					ActorNr: args.ActorNr,
+					TargetActor: args.TargetActor,
+					Properties: args.Properties
+				}
+			}
+		});
+	}
 };
 
 // Triggered by calling "OpRaiseEvent" on the Photon client. The "args.Data" property is 
 // set to the value of the "customEventContent" HashTable parameter, so you can use
 // it to pass in arbitrary data.
 handlers.RoomEventRaised = function (args) {
-    var eventData = args.Data;
-    log.debug("Event Raised - Game: " + args.GameId + " Event Type: " + eventData.eventType);
+	server.WritePlayerEvent({
+		EventName: "event_raised",
+		PlayFabId: args.UserId,
+		Body: {
+			WebHook: {
+				AppVersion: args.AppVersion,
+				Region: args.Region,
+				GameId: args.GameId,
+				ActorNr: args.ActorNr,
+				EvCode: args.EvCode
+			}
+		}
+	});
 
+	var eventData = args.Data;
     switch (eventData.eventType) { // use args.EvCode instead of embedding eventType in payload
         case "playerMove":
             processPlayerMove(eventData);
