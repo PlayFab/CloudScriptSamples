@@ -52,4 +52,5 @@ handlers.GetSegmentPlayerCountSample = function (args, context) {
     var playerCount = playersInSegmentResult.ProfilesInSegment;
 
     // TODO: Add logic to process the playerCount
+
 };
