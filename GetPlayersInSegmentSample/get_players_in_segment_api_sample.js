@@ -1,8 +1,8 @@
 handlers.GetPlayersInSegmentSample = function (args, context) {
 
     /*
-        Sample code to use GetPlayersInSegment API to process player profiles in a Segment.
-        GetPlayersInSegment API pages through the all the player profiles
+        Sample code to use the GetPlayersInSegment API to the process player profiles in a Segment.
+        The GetPlayersInSegment API pages through the all the player profiles
         in the Segment in batches of size 'MaxBatchSize'.
         API Doc: https://learn.microsoft.com/en-us/rest/api/playfab/server/play-stream/get-players-in-segment?view=playfab-rest
     */
@@ -21,7 +21,8 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
         // get the current batch of player profiles
         var playerProfiles = playersInSegmentResult.PlayerProfiles;
 
-        // TODO: Add logic here to process the above playerProfiles
+        // TODO: 
+        // Add logic here to process the above playerProfiles
 
         // get the next batch of player profiles in the Segment
         request =  {
@@ -37,7 +38,7 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
 handlers.GetSegmentPlayerCountSample = function (args, context) {
 
     /*
-        Sample code to use GetPlayersInSegment API to get the number of players in a Segment
+        Sample code to use the GetPlayersInSegment API to get the number of players in a Segment
         API Doc: https://learn.microsoft.com/en-us/rest/api/playfab/server/play-stream/get-players-in-segment?view=playfab-rest
     */
 
@@ -49,8 +50,10 @@ handlers.GetSegmentPlayerCountSample = function (args, context) {
     // make the GetPlayersInSegment API call
     var playersInSegmentResult =  server.GetPlayersInSegment(request);
 
+    // the API gives the player count in the very first response
     var playerCount = playersInSegmentResult.ProfilesInSegment;
 
-    // TODO: Add logic to process the playerCount
+    // TODO:
+    // Add logic to process the playerCount
 
 };
