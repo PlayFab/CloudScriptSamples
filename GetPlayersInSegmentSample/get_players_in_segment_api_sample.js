@@ -21,8 +21,11 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
         // get the current batch of player profiles
         var playerProfiles = playersInSegmentResult.PlayerProfiles;
 
-        // TODO: 
-        // Add logic here to process the above playerProfiles
+        if (playerProfiles && playerProfiles.length > 0)
+        {
+            // TODO: 
+            // Add your logic here to process the above playerProfiles
+        }
 
         // get the next batch of player profiles in the Segment
         request =  {
@@ -54,6 +57,6 @@ handlers.GetSegmentPlayerCountSample = function (args, context) {
     var playerCount = playersInSegmentResult.ProfilesInSegment;
 
     // TODO:
-    // Add logic to process the playerCount
+    // Add your logic to process the playerCount
 
 };
