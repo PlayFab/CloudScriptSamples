@@ -46,7 +46,6 @@ handlers.GetSegmentPlayerCountSample = function (args, context) {
     */
 
     var request =  {
-     MaxBatchSize: 1,
      SegmentId: "AAAAAAAAA" // provide your SegmentId here
     }
 
