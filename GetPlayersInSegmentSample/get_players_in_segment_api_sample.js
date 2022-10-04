@@ -29,7 +29,7 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
             ContinuationToken: playersInSegmentResult.ContinuationToken,
             MaxBatchSize: 1000,
             SegmentId: "AAAAAAAAA" // provide your SegmentId here
-        }        
+        }
         playersInSegmentResult =  server.GetPlayersInSegment(request);
     }
 };
