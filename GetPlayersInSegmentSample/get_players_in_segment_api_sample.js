@@ -8,7 +8,7 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
     */
 
     var request =  {
-     GetProfilesAsync: true,  // note that its set to true
+     GetProfilesAsync: true,  // setting to true is highly recommended to avoid network timeouts
      SegmentId: "AAAAAAAAA"  // provide your SegmentId here
     }
 
