@@ -8,8 +8,8 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
     */
 
     var request =  {
-     MaxBatchSize: 1000,
-     SegmentId: "AAAAAAAAA" // provide your SegmentId here
+     GetProfilesAsync: true,  // note that its set to true
+     SegmentId: "AAAAAAAAA"  // provide your SegmentId here
     }
 
     // make the first GetPlayersInSegment API call
@@ -30,7 +30,7 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
         // get the next batch of player profiles in the Segment
         request =  {
             ContinuationToken: playersInSegmentResult.ContinuationToken,
-            MaxBatchSize: 1000,
+            GetProfilesAsync: true,
             SegmentId: "AAAAAAAAA" // provide your SegmentId here
         }
         playersInSegmentResult =  server.GetPlayersInSegment(request);
@@ -41,11 +41,12 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
 handlers.GetSegmentPlayerCountSample = function (args, context) {
 
     /*
-        Sample code to use the GetPlayersInSegment API to get the number of players in a Segment
+        Sample code to use the GetPlayersInSegment API to get the count of players in a Segment
         API Doc: https://learn.microsoft.com/en-us/rest/api/playfab/server/play-stream/get-players-in-segment?view=playfab-rest
     */
 
     var request =  {
+     MaxBatchSize: 0,       // note the '0' value here
      SegmentId: "AAAAAAAAA" // provide your SegmentId here
     }
 
