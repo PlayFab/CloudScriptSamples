@@ -46,7 +46,7 @@ handlers.GetSegmentPlayerCountSample = function (args, context) {
     */
 
     var request =  {
-     MaxBatchSize: 0,       // note the '0' value here
+     MaxBatchSize: 0,       // note the '0' value here to get only the count of the profiles in the response
      SegmentId: "AAAAAAAAA" // provide your SegmentId here
     }
 
