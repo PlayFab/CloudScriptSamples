@@ -1,7 +1,7 @@
 handlers.GetPlayersInSegmentSample = function (args, context) {
 
     /*
-        Sample code to use the GetPlayersInSegment API to the process player profiles in a Segment.
+        Sample code to use the GetPlayersInSegment API to process the player profiles in a Segment.
         The GetPlayersInSegment API pages through the all the player profiles
         in the Segment in batches of size 'MaxBatchSize'.
         API Doc: https://learn.microsoft.com/en-us/rest/api/playfab/server/play-stream/get-players-in-segment?view=playfab-rest
@@ -9,6 +9,7 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
 
     var request =  {
      GetProfilesAsync: true,  // setting to true is highly recommended to avoid network timeouts
+     MaxBatchSize: 1000,      // 1000 is the default value. Maximum is 10,000
      SegmentId: "AAAAAAAAA"  // provide your SegmentId here
     }
 
@@ -31,6 +32,7 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
         request =  {
             ContinuationToken: playersInSegmentResult.ContinuationToken,
             GetProfilesAsync: true,
+            MaxBatchSize: 1000,
             SegmentId: "AAAAAAAAA" // provide your SegmentId here
         }
         playersInSegmentResult =  server.GetPlayersInSegment(request);
