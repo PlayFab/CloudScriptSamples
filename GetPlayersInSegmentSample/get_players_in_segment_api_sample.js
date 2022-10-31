@@ -8,7 +8,7 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
     */
 
     var request =  {
-     GetProfilesAsync: true,  // setting to true is highly recommended to avoid network timeouts
+     GetProfilesAsync: true,  // setting to 'true' is highly recommended to avoid network timeouts
      MaxBatchSize: 1000,      // 1000 is the default value. Maximum is 10,000
      SegmentId: "AAAAAAAAA"  // provide your SegmentId here
     }
@@ -28,13 +28,9 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
             // Add your logic here to process the above playerProfiles
         }
 
+        request.ContinuationToken =  playersInSegmentResult.ContinuationToken;
+
         // get the next batch of player profiles in the Segment
-        request =  {
-            ContinuationToken: playersInSegmentResult.ContinuationToken,
-            GetProfilesAsync: true,
-            MaxBatchSize: 1000,
-            SegmentId: "AAAAAAAAA" // provide your SegmentId here
-        }
         playersInSegmentResult =  server.GetPlayersInSegment(request);
     }
 };
