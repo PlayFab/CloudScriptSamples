@@ -10,7 +10,7 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
     var request =  {
      GetProfilesAsync: true,  // setting to 'true' is highly recommended to avoid network timeouts
      MaxBatchSize: 1000,      // 1000 is the default value. Maximum is 10,000
-     SegmentId: "AAAAAAAAA"  // provide your SegmentId here
+     SegmentId: "AAAAAAAAA"  // provide your SegmentId here OR you can add SegmentId in the JSON args sent from PlayFab caller/game client and use that
     }
 
     // make the first GetPlayersInSegment API call
@@ -24,8 +24,12 @@ handlers.GetPlayersInSegmentSample = function (args, context) {
 
         if (playerProfiles && playerProfiles.length > 0)
         {
-            // TODO: 
-            // Add your logic here to process the above playerProfiles
+            for(let i=0;i<playerProfiles.length;i++)
+            {
+                var playerProfile = playerProfiles[i];
+                // TODO:
+                // Add your logic here to process the playerProfile
+            }
         }
 
         request.ContinuationToken =  playersInSegmentResult.ContinuationToken;
@@ -45,7 +49,7 @@ handlers.GetSegmentPlayerCountSample = function (args, context) {
 
     var request =  {
      MaxBatchSize: 0,       // note the '0' value here to get only the count of the profiles in the response
-     SegmentId: "AAAAAAAAA" // provide your SegmentId here
+     SegmentId: "AAAAAAAAA" // provide your SegmentId here OR you can add SegmentId in the JSON args sent from PlayFab caller/game client and use that
     }
 
     // make the GetPlayersInSegment API call
